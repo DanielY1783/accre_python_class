@@ -80,6 +80,13 @@ def convert_string(input_string):
 
 
 def print_temps(temperatures):
+    """
+    Prints temperatures from tuple containing temperature in (C, K, F) form
+    to standard output.
+    :param temperatures: Tuple of three integers containing temperature in
+    (C, K, F) form to standard output.
+    :return: None
+    """
     print("The temperature in Celsius is {0:.2F} C.".format(temperatures[0]))
     print("The temperature in Kelvin is {0:.2F} K.".format(temperatures[1]))
     print("The temperature in Fahrenheit is {0:.2F} F.".format(temperatures[2]))
