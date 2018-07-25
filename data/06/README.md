@@ -1,0 +1,1 @@
+Test file for ../../bin/06/line_counter.py
