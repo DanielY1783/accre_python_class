@@ -1,0 +1,4 @@
+**info.csv**
+
+Corresponds to the following exercise:
+Save the csv content below into a file. This information is the last name, first name, and age of employees of an imaginary company, animals.com. Write a script to read in the csv file and then write a new file with all the information as well as a fourth column with the email address of each employee. The email address of an employee is comprised of their last name (up to the first seven letters, all lowercase) followed by the first letter of their first name (lowercase) at animals.com. For example, I am Eric Appelt and my email would be appelte@animals.com. Ada Lovelace would be lovelaca@animals.com.

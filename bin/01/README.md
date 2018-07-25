@@ -1,0 +1,3 @@
+## Exercises:
+1. Write a program to take an integer that the user inputs and print the corresponding Fibonacci Number. The Fibonacci sequence begins 1, 1, 2, 3, 5, 8, 13, so if the user inputs 7, the user should see the 7th Fibonacci number printed, which is 13. If the user inputs a negative number the program should print an error message.
+2. Write a program to convert temperatures from Fahrenheit to Celsius or vice versa. Have the user select which one from a menu (use a triple-quoted string to make the menu text) or quit from the program. Use a while loop to allow the user to convert multiple values.
