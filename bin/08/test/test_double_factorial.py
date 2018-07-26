@@ -25,7 +25,7 @@
 # validity of your implementation.
 
 # Import module and pytest
-import double_factorial
+from src.double_factorial import double_factorial as df
 import pytest
 
 def test_double_factorial_1():
