@@ -1,4 +1,4 @@
 language: python
 python: "3.6"
 script: 
-- pytest -v /bin/08/test/test_double_factorial.py
+- pytest -v bin/08/test/test_double_factorial.py
