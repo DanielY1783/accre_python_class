@@ -22,12 +22,15 @@
 # os.stat(...) result to manipulate the modification time as a datetime object.
 
 # Libraries
+import datetime
 import os
+
 
 def dict_file_sizes(directory):
     """
     Creates and returns a dictionary containing keys as files in a directory
     and values as the sizes in the directory.
+
     :param directory: String of directory to look in. Exception will be
     raised if this is invalid.
     :return: Dictionary containing keys as files in directory and values as
@@ -46,6 +49,63 @@ def dict_file_sizes(directory):
     # Return dictionary with file names as keys and sizes as values.
     return files_dict
 
+
+def print_file_sizes_dict(file_sizes_dict):
+    """
+    Print files and sizes from dictionary in nice format to standard output,
+    with file in first column and size in second column.
+    :param file_sizes_dict: Dictionary with file as key and size as value
+    :return: None
+    """
+    for file, size in file_sizes_dict.items():
+        print("File: {:<25} Size: {} bytes".format(file, size))
+
+
+def dict_days_modified(directory):
+    """
+    Creates and returns a dictionary containing keys as files in a directory
+    and values as integers of number of days since the file was last modified.
+
+    :param directory: String of directory to look in. Exception will be
+    raised if this is invalid.
+    :return: Dictionary containing keys as files and values as integers of
+    number of days since the file was last modified.
+    """
+    # Get list of files
+    files_list = os.listdir(directory)
+
+    # Get date of files and find number of days since last modification.
+    # Store to dictionary as value, with file names as keys.
+    files_dict = {}
+    for file in files_list:
+        dir_and_file = os.path.join(directory, file)
+        # Get valid files only
+        if os.path.isfile(dir_and_file):
+            # Get last modified date
+            last_modified_timestamp = os.stat(dir_and_file).st_mtime
+            last_modified_date = datetime.date.fromtimestamp(
+                last_modified_timestamp)
+            # Store days since last modification to dictionary
+            files_dict[file] = (datetime.date.today() - last_modified_date).days
+    # Return dictionary with file names as keys and integer days since last
+    # modification as value.
+    return files_dict
+
+
+def print_file_modified_dict(file_modified_dict):
+    """
+    Print files and sizes from dictionary in nice format to standard output,
+    with file in first column and size in second column.
+    :param file_sizes_dict: Dictionary with file as key and size as value
+    :return: None
+    """
+    for file, days in file_modified_dict.items():
+        print("File: {:<25} Days: {} days since last modification".format(file,
+            days))
+
+
 if __name__ == '__main__':
     file_sizes_dict = dict_file_sizes(os.getcwd())
-    print(file_sizes_dict)
+    print_file_sizes_dict(file_sizes_dict)
+    file_modified_dict = dict_days_modified("../../../Test_Project")
+    print_file_modified_dict(file_modified_dict)
