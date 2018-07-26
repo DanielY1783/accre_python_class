@@ -24,5 +24,28 @@
 # you think you have done this correctly, run the test to ensure the
 # validity of your implementation.
 
-def double_factorial():
-    pass
+def double_factorial(val):
+    """
+    Custom factorial that only multiples by odd non-negative values if passed
+    odd parameter; only multiples by even non-negative values if passed even
+    parameter. For example, double_factorial(5) = 5 * 3 * 1 = 15 and
+    double_factorial(4) = 4 * 2 = 8. Note that double_factorial(0) = 1.
+
+    :param val: Value to perform operation on. Must be non-negative integer.
+    Exception is raised if negative.
+    :return: Integer factorial of the value except that only even values will
+    be multiplied if parameter is even; only odd values will be multiplied if
+    parameter is odd.
+    """
+    if val < 0:
+        raise ValueError("double_factorial must take non-negative parameter!")
+
+    elif val == 0:
+        return 1
+
+    else:
+        fact = 1
+        while val > 0:
+            fact = fact * val
+            val -= 2
+        return fact
