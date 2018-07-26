@@ -1,4 +1,4 @@
-https://travis-ci.org/DanielY1783/accre_python_class.svg?branch=master
+[![Build Status](https://travis-ci.org/DanielY1783/accre_python_class.svg?branch=master)](https://travis-ci.org/DanielY1783/accre_python_class)
 
 ## Description
 This repository contains python files with my solutions to exercises from Eric Appelt's accre python course at 
