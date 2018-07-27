@@ -59,3 +59,57 @@ def test_repr_1():
 def test_repr_2():
     d1 = DiceSet(4, 3, 11)
     assert repr(d1) == "dice.DiceSet(4, 3, 11)"
+
+# Tests for min and max
+def test_max_1():
+    d1 = DiceSet(4, 3)
+    assert d1.max() == 12
+
+def test_max_2():
+    d1 = DiceSet(4, 3, 11)
+    assert d1.max() == 132
+
+def test_max_3():
+    d1 = DiceSet(0, 3, 11)
+    assert d1.max() == 0
+
+def test_min_1():
+    d1 = DiceSet(4, 3)
+    assert d1.min() == 4
+
+def test_min_2():
+    d1 = DiceSet(4, 3, 11)
+    assert d1.min() == 44
+
+def test_min_3():
+    d1 = DiceSet(0, 3, 11)
+    assert d1.min() == 0
+
+def test_min_4():
+    d1 = DiceSet(4, 8)
+    assert d1.min() == 4
+
+# Tests for range
+def test_range_1():
+    d1 = DiceSet(4, 3)
+    assert d1.range() == [4, 5, 6, 7, 8, 9, 10, 11, 12]
+
+def test_range_2():
+    d1 = DiceSet(2, 3, 2)
+    assert d1.range() == [4, 6, 8, 10, 12]
+
+# Test for count_attempts
+def test_count_attempts_1():
+    df = DiceSet(4, 3)
+    with pytest.raises(ValueError):
+        df.count_attempts(13)
+
+def test_count_attempts_2():
+    df = DiceSet(4, 3)
+    with pytest.raises(ValueError):
+        df.count_attempts(3)
+
+def test_count_attempts_3():
+    df = DiceSet(4, 3, 2)
+    with pytest.raises(ValueError):
+        df.count_attempts(11)

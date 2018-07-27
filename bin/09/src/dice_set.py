@@ -72,6 +72,9 @@ class DiceSet:
         if value not in self.range():
             raise ValueError("Not possible to roll {}".format(value))
 
+        if value % self.base != 0:
+            raise ValueError("Not possible to roll {}".format(value))
+
         attempts = 0  # Initialize DiceSet with no attempts
         # Keep rolling until value is attained, and return number of attempts.
         while True:
