@@ -32,12 +32,12 @@ class DiceSet:
         self.base = base
 
     def __repr__(self):
-        return "dice.DiceSet({}, {}, {})".format(self._number, self._sides,
-                                                 self._base)
+        return "dice.DiceSet({}, {}, {})".format(self.number, self.sides,
+                                                 self.base)
 
     def __str__(self):
         return "DiceSet of {} dice with {} sides, base numbering {}".format(
-            self._number, self._sides, self._base)
+            self.number, self.sides, self.base)
 
     def roll(self):
         """Roll the dice set and return the result"""
