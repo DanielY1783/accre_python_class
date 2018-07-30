@@ -52,8 +52,8 @@ class DiceSet:
         Set the number, sides, and bases of the DiceSet
         """
         self._number = number
-        self._sides = sides
-        self._base = base
+        self.sides = sides
+        self.base = base
 
     @classmethod  # This is a class method decorator and refers to the class
     # rather than object
@@ -76,12 +76,12 @@ class DiceSet:
         self._number = value
 
     def __repr__(self):
-        return "dice.DiceSet({}, {}, {})".format(self._number, self._sides,
-                                                 self._base)
+        return "dice.DiceSet({}, {}, {})".format(self._number, self.sides,
+                                                 self.base)
 
     def __str__(self):
         return "DiceSet of {} dice with {} sides, base numbering {}".format(
-            self._number, self._sides, self._base)
+            self._number, self.sides, self.base)
 
     def roll(self):
         """Roll the dice set and return the result"""
@@ -210,4 +210,3 @@ class TrackingDiceSet(DiceSet):
     def roll(self):
         roll_val = super.roll()
         _roll_history.append(roll_val)
-        return roll_val
