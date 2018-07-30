@@ -52,8 +52,8 @@ class DiceSet:
         Set the number, sides, and bases of the DiceSet
         """
         self._number = number
-        self.sides = sides
-        self.base = base
+        self._sides = sides
+        self._base = base
 
     @classmethod  # This is a class method decorator and refers to the class
     # rather than object
@@ -197,3 +197,17 @@ class WeightedDiceSet(DiceSet):
         the number and weights of self and other.
         """
         return self + other
+
+
+class TrackingDiceSet(DiceSet):
+    def __init__(self, number, sides, base=1):
+        super.__init__(number, sides, base=base)
+        _roll_history = []
+        _number_history = []
+        _sides_history = []
+        _base_history = []
+
+    def roll(self):
+        roll_val = super.roll()
+        _roll_history.append(roll_val)
+        return roll_val
