@@ -135,12 +135,11 @@ class WeightedDiceSet(DiceSet):
         return len(weights) - 1
 
     ############################################################################
-    # End   original code by Eric Appel                                       ##
+    # End   original code by Eric Appelt                                       #
     ############################################################################
 
     ############################################################################
-    #  Begin new code by Daniel Yan
-    #     #
+    #  Begin new code by Daniel Yan                                            #
     ############################################################################
 
     # Start with exercise 2 and add to WeightedDiceSet
