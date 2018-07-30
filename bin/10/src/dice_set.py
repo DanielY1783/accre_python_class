@@ -52,8 +52,8 @@ class DiceSet:
         Set the number, sides, and bases of the DiceSet
         """
         self._number = number
-        self.sides = sides
-        self.base = base
+        self._sides = sides
+        self._base = base
 
     @classmethod  # This is a class method decorator and refers to the class
     # rather than object
@@ -156,11 +156,11 @@ class WeightedDiceSet(DiceSet):
         # If adding two DiceSets
         if isinstance(other, DiceSet):
             # Raise exception if number of sides for two dice is different
-            if self.sides != other.sides:
+            if self._sides != other._sides:
                 raise TypeError("Number of sides on two dice is different.")
 
             # Raise exception if two dice have different bases.
-            if self.base != other.base:
+            if self._base != other._base:
                 raise TypeError("Number of bases on two dice is different.")
 
             # Add weights and number if both dice are WeightedDiceSet
@@ -169,7 +169,7 @@ class WeightedDiceSet(DiceSet):
                                    range(len(self.weights)))
 
                 return WeightedDiceSet(number=self.number + other.number,
-                                       sides=self.sides, base=self.base,
+                                       sides=self._sides, base=self._base,
                                        weights=new_weights)
 
             # Use default of 1 for weights for a regular DiceSet
@@ -178,7 +178,7 @@ class WeightedDiceSet(DiceSet):
                     self.weights[i] + 1 for i in range(len(self.weights)))
 
                 return WeightedDiceSet(number=self.number + other.number,
-                                       sides=self.sides, base=self.base,
+                                       sides=self._sides, base=self._base,
                                        weights=new_weights)
 
         # Raise exception if adding to something that is not a DiceSet
@@ -201,12 +201,133 @@ class WeightedDiceSet(DiceSet):
 
 class TrackingDiceSet(DiceSet):
     def __init__(self, number, sides, base=1):
-        super.__init__(number, sides, base=base)
-        _roll_history = []
-        _number_history = []
-        _sides_history = []
-        _base_history = []
+        """
+        Set number, sides, and base of TrackingDiceSet. Set history as empty.
+
+        :param number: Number of dice in the set.
+        :param sides: Number of sides for each dice.
+        :param base: Base of dice. A base of 1 would result in sides of 1, 2,
+        3, etc, while a base of 2 would results in sides of 2, 4, 6, etc.
+        """
+        super().__init__(number, sides, base=base)
+        self._roll_history = []
+        self._number_history = []
+        self._sides_history = []
+        self._base_history = []
 
     def roll(self):
-        roll_val = super.roll()
-        _roll_history.append(roll_val)
+        """
+        Roll the set of tracking dice once and store result to history.
+
+        :return: Sum of the values of all dice from the set.
+        """
+        roll_val = super().roll()
+        self._roll_history.append(roll_val)
+        return roll_val
+
+    @property
+    def number(self):
+        """
+        Getter for number.
+
+        :return: Number of dice.
+        """
+        return self._number
+
+    @number.setter
+    def number(self, value):
+        """
+        Setter for number that stores the previous number of dice.
+
+        :param value: New number of dice in set.
+        :return: None.
+        """
+        self._number_history.append((len(self._roll_history), self.number))
+        self._number = value
+
+    @property
+    def sides(self):
+        """
+        Getter for sides.
+
+        :return: Number of sides for each dice.
+        """
+        return self._sides
+
+    @sides.setter
+    def sides(self, value):
+        """
+        Setter for sides that stores the previous number of sides.
+
+        :param value: New number of sides for each dice.
+        :return: None.
+        """
+        self._sides_history.append((len(self._roll_history), self.sides))
+        self._sides = value
+
+    @property
+    def base(self):
+        """
+        Getter for base.
+
+        :return: Base value for the dice.
+        """
+        return self._base
+
+    @base.setter
+    def base(self, value):
+        """
+        Setter for base for the dice that stores the previous base value.
+
+        :param value: New base value.
+        :return: None.
+        """
+        self._base_history.append((len(self._roll_history), self.base))
+        self._base = value
+
+    def get_state(self, roll_index):
+        """
+        Get the state of the dice set in as a tuple showing number, sides,
+        base at a certain point.
+
+        :param roll_index: Zero based index for the number roll that was
+        made, such that 0 corresponds to first roll, 1 corresponds to second
+        roll, and so on.
+        :return: Tuple with first value as number, second value as sides,
+        and third value as base.
+        """
+        # Throw exception if the roll has not been made
+        if roll_index + 1 > len(self._roll_history):
+            raise IndexError("Roll has not been made yet.")
+
+        # Store number, sides, and base to return. Start with current value.
+        number_val = self.number
+        sides_val = self.sides
+        base_val = self.base
+
+        # Get number from history by going through history of numbers
+        for roll_hist, number_hist in self._number_history:
+            # If the index to find is less than the current roll number in
+            # history, the TrackingDiceSet was the current number when rolled.
+            if roll_index < roll_hist:
+                number_val = number_hist
+                break
+
+        # Get sides from history by going through history of sides
+        for roll_hist, sides_hist in self._sides_history:
+            # If the index to find is less than the current sides value in
+            # history, the TrackingDiceSet was the current sides value when
+            # rolled.
+            if roll_index < roll_hist:
+                sides_val = sides_hist
+                break
+
+        # Get sides from history by going through history of sides
+        for roll_hist, base_hist in self._base_history:
+            # If the index to find is less than the current roll number in
+            # history, the TrackingDiceSet was the current number when rolled.
+            if roll_index < roll_hist:
+                base_val = base_hist
+                break
+
+        return (number_val, sides_val, base_val)

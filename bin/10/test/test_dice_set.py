@@ -8,6 +8,7 @@
 # Imports
 from src.dice_set import DiceSet as DiceSet
 from src.dice_set import WeightedDiceSet as WeightedDiceSet
+from src.dice_set import TrackingDiceSet as TrackingDiceSet
 import pytest
 
 
@@ -100,3 +101,144 @@ def test_weighted_dice_set_add_12():
     wds1 = WeightedDiceSet(4, 3, weights=[1, 3, 2])
     with pytest.raises(TypeError):
         wds3 = 4 + wds1
+
+# Tests for TrackingDiceSet roll history
+def test_tracking_dice_set_1():
+    tds1 = TrackingDiceSet(4, 3)
+    roll_1 = tds1.roll()
+    roll_2 = tds1.roll()
+    roll_3 = tds1.roll()
+    assert roll_1 == tds1._roll_history[0]
+
+def test_tracking_dice_set_2():
+    tds1 = TrackingDiceSet(4, 3)
+    roll_1 = tds1.roll()
+    roll_2 = tds1.roll()
+    roll_3 = tds1.roll()
+    assert roll_2 == tds1._roll_history[1]
+
+def test_tracking_dice_set_3():
+    tds1 = TrackingDiceSet(4, 3)
+    roll_1 = tds1.roll()
+    roll_2 = tds1.roll()
+    roll_3 = tds1.roll()
+    assert roll_3 == tds1._roll_history[2]
+
+# Tests for TrackingDiceSet get_state
+def test_tracking_dice_set_4():
+    tds1 = TrackingDiceSet(4, 3)
+    roll_1 = tds1.roll()
+    roll_2 = tds1.roll()
+    roll_3 = tds1.roll()
+    assert tds1.get_state(0) == (4, 3, 1)
+
+def test_tracking_dice_set_5():
+    tds1 = TrackingDiceSet(4, 3)
+    roll_1 = tds1.roll()
+    roll_2 = tds1.roll()
+    roll_3 = tds1.roll()
+    assert tds1.get_state(2) == (4, 3, 1)
+
+def test_tracking_dice_set_6():
+    tds1 = TrackingDiceSet(4, 3)
+    tds1.number = 2
+    roll_1 = tds1.roll()
+    tds1.number = 3
+    roll_2 = tds1.roll()
+    roll_3 = tds1.roll()
+    tds1.base = 5
+    assert tds1.get_state(0) == (2, 3, 1)
+
+def test_tracking_dice_set_7():
+    tds1 = TrackingDiceSet(4, 3)
+    tds1.number = 2
+    roll_1 = tds1.roll()
+    tds1.number = 3
+    roll_2 = tds1.roll()
+    roll_3 = tds1.roll()
+    tds1.base = 5
+    assert tds1.get_state(1) == (3, 3, 1)
+
+def test_tracking_dice_set_8():
+    tds1 = TrackingDiceSet(4, 3)
+    roll_1 = tds1.roll()
+    tds1.sides = 4
+    roll_2 = tds1.roll()
+    roll_3 = tds1.roll()
+    roll_4 = tds1.roll()
+    tds1.sides = 5
+    tds1.base = 2
+    roll_5 = tds1.roll()
+    tds1.sides = 6
+    roll_6 = tds1.roll()
+    assert tds1.get_state(0) == (4, 3, 1)
+
+def test_tracking_dice_set_9():
+    tds1 = TrackingDiceSet(4, 3)
+    roll_1 = tds1.roll()
+    tds1.sides = 4
+    roll_2 = tds1.roll()
+    roll_3 = tds1.roll()
+    roll_4 = tds1.roll()
+    tds1.sides = 5
+    tds1.base = 2
+    roll_5 = tds1.roll()
+    tds1.sides = 6
+    roll_6 = tds1.roll()
+    assert tds1.get_state(1) == (4, 4, 1)
+
+def test_tracking_dice_set_10():
+    tds1 = TrackingDiceSet(4, 3)
+    roll_1 = tds1.roll()
+    tds1.sides = 4
+    roll_2 = tds1.roll()
+    roll_3 = tds1.roll()
+    roll_4 = tds1.roll()
+    tds1.sides = 5
+    tds1.base = 2
+    roll_5 = tds1.roll()
+    tds1.sides = 6
+    roll_6 = tds1.roll()
+    assert tds1.get_state(2) == (4, 4, 1)
+
+def test_tracking_dice_set_11():
+    tds1 = TrackingDiceSet(4, 3)
+    roll_1 = tds1.roll()
+    tds1.sides = 4
+    roll_2 = tds1.roll()
+    roll_3 = tds1.roll()
+    roll_4 = tds1.roll()
+    tds1.sides = 5
+    tds1.base = 2
+    roll_5 = tds1.roll()
+    tds1.sides = 6
+    roll_6 = tds1.roll()
+    assert tds1.get_state(3) == (4, 4, 1)
+
+def test_tracking_dice_set_12():
+    tds1 = TrackingDiceSet(4, 3)
+    roll_1 = tds1.roll()
+    tds1.sides = 4
+    roll_2 = tds1.roll()
+    roll_3 = tds1.roll()
+    roll_4 = tds1.roll()
+    tds1.sides = 5
+    tds1.base = 2
+    roll_5 = tds1.roll()
+    tds1.sides = 6
+    roll_6 = tds1.roll()
+    assert tds1.get_state(4) == (4, 5, 2)
+
+def test_tracking_dice_set_13():
+    tds1 = TrackingDiceSet(4, 3)
+    roll_1 = tds1.roll()
+    tds1.sides = 4
+    roll_2 = tds1.roll()
+    roll_3 = tds1.roll()
+    roll_4 = tds1.roll()
+    tds1.sides = 5
+    tds1.base = 2
+    roll_5 = tds1.roll()
+    tds1.sides = 6
+    roll_6 = tds1.roll()
+    assert tds1.get_state(5) == (4, 6, 2)
