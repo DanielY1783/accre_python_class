@@ -200,6 +200,9 @@ class WeightedDiceSet(DiceSet):
 
 
 class TrackingDiceSet(DiceSet):
+    """
+    DiceSet that tracks rolls and number, sides, and bases for rolls.
+    """
     def __init__(self, number, sides, base=1):
         """
         Set number, sides, and base of TrackingDiceSet. Set history as empty.
