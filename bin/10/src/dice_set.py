@@ -179,7 +179,8 @@ class WeightedDiceSet(DiceSet):
                     self.weights[i] + 1 for i in range(len(self.weights)))
 
                 return WeightedDiceSet(number=self.number + other.number,
-                                       sides=self.sides, base=self.base)
+                                       sides=self.sides, base=self.base,
+                                       weights=new_weights)
 
         # Raise exception if adding to something that is not a DiceSet
         else:
