@@ -1,6 +1,6 @@
 # Author: Daniel Yan
 # Email: daniel.yan@vanderbilt.edu
-# Date: 2018-07-27
+# Date: 2018-07-30
 #
 # Description: DiceSet object represents a set of dice, and TrackingDiceSet
 # and WeightedDiceSet are subclasses. Original code by Eric
