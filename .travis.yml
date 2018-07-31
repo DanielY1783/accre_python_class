@@ -1,4 +1,7 @@
 language: python
 python: "3.6"
 script: 
-- pytest -v
+- pytest -v bin/08/test/test_double_factorial.py
+- pytest -v bin/09/test/test_dice_set.py
+- pytest -v bin/10/test/test_dice_set.py
+- pytest -v bin/11/test/test_generators.py
